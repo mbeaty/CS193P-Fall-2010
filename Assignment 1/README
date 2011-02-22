@@ -1,3 +1,4 @@
+Issues
 1) Doesn't support operator precedence
 2) Entering operand multiple times in succession performs operation
 3) Operator followed by = should cancel the operator (mac calculator does funky stuff for repeated =)
