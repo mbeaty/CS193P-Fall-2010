@@ -18,7 +18,7 @@
 	return memory;
 }
 
-- (void)performWaitingOperation { 
+- (void)performWaitingOperation {
 	if ([@"+" isEqual:waitingOperation]) { 
 		operand = waitingOperand + operand; 
 	} else if ([@"x" isEqual:waitingOperation]) {
@@ -26,9 +26,7 @@
 	} else if ([@"-" isEqual:waitingOperation]) { 
 		operand = waitingOperand - operand;
 	} else if ([@"/" isEqual:waitingOperation]) {
-		if (operand) {  // fail quietly on divide by 0 for now
-			operand = waitingOperand / operand;
-		}
+		operand = waitingOperand / operand;
 	} 
 }
 	

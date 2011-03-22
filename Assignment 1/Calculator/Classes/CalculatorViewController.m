@@ -10,6 +10,8 @@
 
 @implementation CalculatorViewController
 
+static NSString * const DECIMAL_POINT = @".";
+
 // Getter for brain instance variable; lazy instantiation
 
 - (CalculatorBrain *)brain {
@@ -31,15 +33,14 @@
 }
 
 - (IBAction)decimalPressed:(UIButton *)sender {
-	//NSLog(@"Decimal Pressed!");
 	NSString *entered = [display text];
 	if (userIsInTheMiddleOfTypingANumber) {
-		if ([entered rangeOfString:@"."].location == NSNotFound) {
-			[display setText:[[display text] stringByAppendingString:@"."]];
+		if ([entered rangeOfString:DECIMAL_POINT].location == NSNotFound) {
+			[display setText:[[display text] stringByAppendingString:DECIMAL_POINT]];
 		}
 	}
 	else {
-		[display setText:@"."];
+		[display setText:DECIMAL_POINT];
 		userIsInTheMiddleOfTypingANumber = YES;
 	}
 }
@@ -53,7 +54,14 @@
 	
 	NSString *operation = [[sender titleLabel] text];
 	double result = [[self brain] performOperation:operation];
-	[display setText:[NSString stringWithFormat:@"%g", result]];
+	// keeping it simple for the errors for now
+	if (isnan(result)) {
+		[display setText:@"Not a number"];
+	} else if (isinf(result)) {
+		[display setText:@"Division by zero"];
+	} else {
+    	[display setText:[NSString stringWithFormat:@"%g", result]];
+	}
 }
 
 - (IBAction)memoryOperationPressed:(UIButton *)sender {
